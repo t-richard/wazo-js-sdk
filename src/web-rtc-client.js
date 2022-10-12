@@ -97,6 +97,7 @@ type WebRtcConfig = {
   audioOutputDeviceId?: string,
   audioOutputVolume?: number;
   userAgentString?: string,
+  geolocation?: string,
   heartbeatDelay: number,
   heartbeatTimeout: number,
   maxHeartbeats: number,
@@ -467,12 +468,14 @@ export default class WebRTCClient extends Emitter {
 
   call(number: string, enableVideo?: boolean, audioOnly: boolean = false, conference: boolean = false): Session {
     logger.info('sdk webrtc creating call', { number, enableVideo, audioOnly, conference });
+
     const inviterOptions: Object = {
       sessionDescriptionHandlerOptionsReInvite: {
         conference,
         audioOnly,
       },
       earlyMedia: true,
+      extraHeaders: [`Geolocation: ${this.config.geolocation || ''}`],
     };
 
     if (audioOnly) {
@@ -1762,6 +1765,7 @@ export default class WebRTCClient extends Emitter {
       logConnector: this.config.log ? this.config.log.connector : null,
       uri: this._makeURI(this.config.authorizationUser || ''),
       userAgentString: this.config.userAgentString || 'wazo-sdk',
+      geolocation: this.config.geolocation || '',
       reconnectionAttempts: 10000,
       reconnectionDelay: 5,
       sessionDescriptionHandlerFactory: (session: Session, options: SessionDescriptionHandlerFactoryOptions = {}) => {
