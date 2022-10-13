@@ -50,6 +50,7 @@ export const CALL_ENDED = 'call_ended';
 export const CALL_UPDATED = 'call_updated';
 export const CALL_HELD = 'call_held';
 export const CALL_RESUMED = 'call_resumed';
+export const CALL_CONNECTED = 'call_connected';
 export const AUTH_USER_EXTERNAL_AUTH_ADDED = 'auth_user_external_auth_added';
 export const AUTH_USER_EXTERNAL_AUTH_DELETED = 'auth_user_external_auth_deleted';
 export const CHATD_PRESENCE_UPDATED = 'chatd_presence_updated';
@@ -405,6 +406,7 @@ WebSocketClient.eventLists = [
   CALL_UPDATED,
   CALL_HELD,
   CALL_RESUMED,
+  CALL_CONNECTED,
   AUTH_USER_EXTERNAL_AUTH_ADDED,
   AUTH_USER_EXTERNAL_AUTH_DELETED,
   CHATD_PRESENCE_UPDATED,

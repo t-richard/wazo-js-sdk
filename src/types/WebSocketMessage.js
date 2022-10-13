@@ -72,6 +72,7 @@ export type CallLogEvent = {
 export type UserStatusUpdateEvent = { status: string, user_uuid: string };
 export type DoNotDisturbUpdateEvent = { enabled: boolean, user_uuid: string };
 export type EndpointStatusUpdateEvent = { endpoint_id: string, status: string };
+export type CallConnectedEvent = {geolocation: string};
 
 export type PresencesReadEvent = {
   lines: Array<{ id: number, state: string }>,
@@ -137,6 +138,7 @@ type CallUpdated = WebSocketBaseMessage & { data: CallMessage, name: 'call_updat
 type CallEnded = WebSocketBaseMessage & { data: CallMessage, name: 'call_ended' };
 type CallHeld = WebSocketBaseMessage & { data: CallEventMessage, name: 'call_held' };
 type CallResumed = WebSocketBaseMessage & { data: CallEventMessage, name: 'call_resumed' };
+type CallConnected = WebSocketBaseMessage & { data: CallConnectedEvent, name: 'call_connected' };
 type ChatMessageSent = WebSocketBaseMessage & { data: ChatMessageEvent, name: 'chatd_user_room_created' };
 type ChatRoomCreate = WebSocketBaseMessage & { data: ChatRoom, name: 'chatd_user_room_message_created' };
 type VoicemailCreated = WebSocketBaseMessage & { data: VoicemailEvent, name: 'user_voicemail_message_created' };
@@ -201,6 +203,7 @@ export type WebSocketMessage =
   | CallEnded
   | CallHeld
   | CallResumed
+  | CallConnected
   | NewCallLog
   | ChatMessageSent
   | (WebSocketBaseMessage & ChatMessageResponse)

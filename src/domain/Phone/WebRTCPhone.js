@@ -26,6 +26,7 @@ export const ON_CALL_UNMUTED = 'onCallUnmuted';
 export const ON_CALL_RESUMED = 'onCallResumed';
 export const ON_CALL_HELD = 'onCallHeld';
 export const ON_CALL_UNHELD = 'onCallUnHeld';
+export const ON_CALL_CONNECTED = 'onCallConnected';
 export const ON_CAMERA_DISABLED = 'onCameraDisabled';
 export const ON_CAMERA_RESUMED = 'onCameraResumed';
 export const ON_CALL_CANCELED = 'onCallCanceled';
@@ -71,6 +72,7 @@ export const events = [
   ON_CALL_UNMUTED,
   ON_CALL_RESUMED,
   ON_CALL_HELD,
+  ON_CALL_CONNECTED,
   ON_CALL_UNHELD,
   ON_CAMERA_DISABLED,
   ON_CALL_FAILED,
@@ -1238,11 +1240,11 @@ export default class WebRTCPhone extends Emitter implements Phone {
     });
   }
 
-  initiateCTIIndirectTransfer() {}
+  initiateCTIIndirectTransfer() { }
 
-  cancelCTIIndirectTransfer() {}
+  cancelCTIIndirectTransfer() { }
 
-  confirmCTIIndirectTransfer() {}
+  confirmCTIIndirectTransfer() { }
 
   async hangup(callSession: ?CallSession): Promise<boolean> {
     const sipSession = this.findSipSession(callSession);
@@ -1311,7 +1313,7 @@ export default class WebRTCPhone extends Emitter implements Phone {
     this.eventEmitter.emit(ON_TERMINATE_SOUND, callSession, 'locally ended');
   }
 
-  onConnectionMade(): void {}
+  onConnectionMade(): void { }
 
   isConference(callSession: ?CallSession): boolean {
     if (!callSession) {
@@ -1484,6 +1486,13 @@ export default class WebRTCPhone extends Emitter implements Phone {
       }, 2000);
     });
 
+    this.client.on(this.client.CALL_CONNECTED, (geolocation: string) => {
+      console.log('🚀 ~ file: WebRTCPhone.js ~ line 1498 ~ WebRTCPhone ~ this.client.on ~ geolocation', geolocation);
+      console.log('CONNECTED');
+
+      this.eventEmitter.emit(ON_CALL_CONNECTED, geolocation);
+    });
+
     this.client.on(this.client.ACCEPTED, (sipSession: Session) => {
       const sessionId = this.getSipSessionId(sipSession);
       const hasSession = sessionId in this.callSessions;
@@ -1501,7 +1510,7 @@ export default class WebRTCPhone extends Emitter implements Phone {
         this.client.changeAudioOutputDevice(this.audioOutputDeviceId);
       }
     });
-    this.client.on('ended', () => {});
+    this.client.on('ended', () => { });
 
     this.client.on(this.client.ON_ERROR, e => {
       logger.error('WebRTC error', e);

@@ -64,6 +64,7 @@ const TRANSPORT_ERROR = 'transportError';
 const MESSAGE = 'message';
 const ACCEPTED = 'accepted';
 const REJECTED = 'rejected';
+const CALL_CONNECTED = 'call_connected';
 const ON_TRACK = 'onTrack';
 const ON_REINVITE = 'reinvite';
 const ON_ERROR = 'onError';
@@ -144,6 +145,7 @@ export default class WebRTCClient extends Emitter {
   MESSAGE: string;
   ACCEPTED: string;
   REJECTED: string;
+  CALL_CONNECTED: string;
   ON_TRACK: string;
   ON_REINVITE: string;
   ON_ERROR: string;
@@ -211,6 +213,7 @@ export default class WebRTCClient extends Emitter {
     this.MESSAGE = MESSAGE;
     this.ACCEPTED = ACCEPTED;
     this.REJECTED = REJECTED;
+    this.CALL_CONNECTED = CALL_CONNECTED;
     this.ON_TRACK = ON_TRACK;
     this.ON_REINVITE = ON_REINVITE;
     this.ON_ERROR = ON_ERROR;
